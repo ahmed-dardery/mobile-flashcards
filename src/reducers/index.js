@@ -1,8 +1,11 @@
-import {ADD_CARD, ADD_DECK, REMOVE_DECK} from "../actions";
+import {ADD_CARD, ADD_DECK, INITIALIZE_DATA, REMOVE_DECK} from "../actions";
 import {combineReducers} from "redux";
 
 function decks(state = {}, action) {
     switch (action.type) {
+        case INITIALIZE_DATA: {
+            return action.decks;
+        }
         case ADD_CARD: {
             const {card, deck} = action;
             return {
@@ -13,19 +16,19 @@ function decks(state = {}, action) {
                 }
             };
         }
-        case ADD_DECK:{
+        case ADD_DECK: {
             const deck = action.deck;
-            return{
+            return {
                 ...state,
-                [deck]:{
+                [deck]: {
                     deckTitle: deck,
                     cards: []
                 }
             }
         }
-        case REMOVE_DECK:{
+        case REMOVE_DECK: {
             const deck = action.deck;
-            let newState = {...state};
+            const newState = {...state};
             newState[deck] = undefined;
             delete newState[deck];
             return newState;

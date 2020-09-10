@@ -12,9 +12,9 @@ function addCard(deck, card) {
 
 export function handleAddCard(deck, card) {
     return (dispatch) => {
-        api.addCard(deck, card)
+        return api.addCard(deck, card)
             .then(dispatch(addCard(deck, card)))
-            .catch(alert("an error occurred while adding the card 😕"))
+            .catch(()=>alert("an error occurred while adding the card 😕"))
     }
 }
 
@@ -26,11 +26,12 @@ function addDeck(deck) {
         deck
     }
 }
+
 export function handleAddDeck(deck) {
     return (dispatch) => {
-        api.addDeck(deck)
+        return api.addDeck(deck)
             .then(dispatch(addDeck(deck)))
-            .catch(alert("an error occurred while adding the deck 😕"))
+            .catch(()=>alert("an error occurred while adding the deck 😕"))
     }
 }
 
@@ -43,10 +44,27 @@ function removeDeck(deck) {
     }
 }
 
-export function handleRemoveDeck(deck){
+export function handleRemoveDeck(deck) {
     return (dispatch) => {
-        api.removeDeck(deck)
+        return api.removeDeck(deck)
             .then(dispatch(removeDeck(deck)))
-            .catch(alert("an error occurred while removing the deck 😕"))
+            .catch(()=>alert("an error occurred while removing the deck 😕"))
+    }
+}
+
+export const INITIALIZE_DATA = 'INITIALIZE_DATA';
+
+function initializeData(decks) {
+    return {
+        type: INITIALIZE_DATA,
+        decks,
+    }
+}
+
+export default function handleInitializeData() {
+    return (dispatch) => {
+        return api.loadData()
+            .then(decks => dispatch(initializeData(decks)))
+            .catch(()=>alert("an error occurred while loading data from database 😕"))
     }
 }
