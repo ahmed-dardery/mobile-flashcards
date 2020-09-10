@@ -2,12 +2,61 @@ import {AsyncStorage} from "react-native";
 
 const deckStoreKey = "@mobile-flash-cards-md:decks";
 
-function loadData() {
-    return AsyncStorage.getItem(deckStoreKey)
-        .then(res => JSON.parse(res));
+const sampleData = {
+    React: {
+        title: 'React',
+        cards: [
+            {
+                question: 'What is React?',
+                answer: 'A library for managing user interfaces'
+            },
+            {
+                question: 'Where do you make Ajax requests in React?',
+                answer: 'The componentDidMount lifecycle event'
+            }
+        ]
+    },
+    JavaScript: {
+        title: 'JavaScript',
+        cards: [
+            {
+                question: 'What is a closure?',
+                answer: 'The combination of a function and the lexical environment within which that function was declared.'
+            }
+        ]
+    },
+    SupposedlyEmpty: {
+        title: 'SupposedlyEmpty',
+        cards: []
+    },
+    Small1:{
+        title: 'Small1',
+        cards:[]
+    },
+    Small2:{
+        title: 'Small2',
+        cards:[]
+    },
+    Small3:{
+        title: 'Small3',
+        cards:[]
+    },
+    Small4:{
+        title: 'Small4',
+        cards:[]
+    },
+    Small5:{
+        title: 'Small5',
+        cards:[]
+    }
+};
+
+export function loadDataAPI() {
+    return new Promise((ok) => ok(sampleData));
+    //return AsyncStorage.getItem(deckStoreKey).then(res => JSON.parse(res));
 }
 
-function addCard(deck, card) {
+export function addCardAPI(deck, card) {
     AsyncStorage.getItem(deckStoreKey)
         .then((res) => {
             const data = JSON.parse(res);
@@ -16,7 +65,7 @@ function addCard(deck, card) {
         })
 }
 
-function addDeck(deck) {
+export function addDeckAPI(deck) {
     const newDeck = {
         deckTitle: deck,
         cards: [],
@@ -24,7 +73,7 @@ function addDeck(deck) {
     return AsyncStorage.mergeItem(deckStoreKey, JSON.stringify({deck: newDeck}));
 }
 
-function removeDeck(deck) {
+export function removeDeckAPI(deck) {
     return AsyncStorage.getItem(deckStoreKey)
         .then((res) => {
             const data = JSON.parse(res);
@@ -32,11 +81,4 @@ function removeDeck(deck) {
             delete data[deck];
             return AsyncStorage.setItem(deckStoreKey, JSON.stringify(data))
         })
-}
-
-export default {
-    loadData,
-    addCard,
-    addDeck,
-    removeDeck
 }
