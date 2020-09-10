@@ -1,15 +1,16 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View} from "react-native";
+import {StyleSheet, Text, TouchableOpacity} from "react-native";
 import {connect} from "react-redux";
 
 class DeckBox extends Component {
     render() {
-        const {deck} = this.props;
+        const {deck, deckId} = this.props;
         return (
-            <View style={styles.deckBox}>
+            <TouchableOpacity style={styles.deckBox}
+                              onPress={() => this.props.navigation.navigate('DeckView', {deckId, title: deck.title})}>
                 <Text style={styles.deckTitle}>{deck.title}</Text>
                 <Text style={styles.deckCount}>{deck.cards.length} cards</Text>
-            </View>
+            </TouchableOpacity>
         )
     }
 }
@@ -45,7 +46,10 @@ const styles = StyleSheet.create({
 });
 
 function mapStateToProps({decks}, {deckId}) {
-    return {deck: decks[deckId]};
+    return {
+        deckId,
+        deck: decks[deckId]
+    };
 }
 
 export default connect(mapStateToProps)(DeckBox);

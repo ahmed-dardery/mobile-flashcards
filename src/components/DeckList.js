@@ -5,13 +5,13 @@ import DeckBox from "./DeckBox";
 
 class DeckList extends Component {
     render() {
-        const {deckIds, decks} = this.props;
+        const {deckIds, decks, navigation} = this.props;
         return (
             <FlatList contentContainerStyle={styles.deckList}
                       data={deckIds}
                       extraData={decks}
                       keyExtractor={(item) => item}
-                      renderItem={({item}) => <DeckBox deckId={item}/>}
+                      renderItem={({item}) => <DeckBox navigation={navigation} deckId={item}/>}
             />
         )
     }
