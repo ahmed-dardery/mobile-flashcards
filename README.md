@@ -2,6 +2,7 @@
 
 This is my work on the Mobile Flashcards Project as a part of the Udacity React Nanodegree Course.
 
+This project has been tested on a **physical** *android* device using **expo**.
 ## Development
 
 Depending on your development environment, you will need to set up a physical device with expo installed, or a simulator. Once you have your development environment set up:

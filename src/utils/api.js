@@ -1,6 +1,6 @@
 import {AsyncStorage} from "react-native";
 
-const deckStoreKey = "@mobile-flash-cards-md:decks";
+const DECK_STORE_KEY = "@mobile-flash-cards-md:decks";
 
 const sampleData = {
     React: {
@@ -53,15 +53,15 @@ const sampleData = {
 
 export function loadDataAPI() {
     //return new Promise((ok) => ok(sampleData));
-    return AsyncStorage.getItem(deckStoreKey).then(res => JSON.parse(res) || {})
+    return AsyncStorage.getItem(DECK_STORE_KEY).then(res => JSON.parse(res) || {})
 }
 
 export function addCardAPI(deck, card) {
-    return AsyncStorage.getItem(deckStoreKey)
+    return AsyncStorage.getItem(DECK_STORE_KEY)
         .then((res) => {
             const data = JSON.parse(res) || {};
             data[deck] = {...data[deck], cards: [...data[deck].cards, card]};
-            return AsyncStorage.setItem(deckStoreKey, JSON.stringify(data))
+            return AsyncStorage.setItem(DECK_STORE_KEY, JSON.stringify(data))
         });
 }
 
@@ -70,15 +70,15 @@ export function addDeckAPI(deck) {
         title: deck,
         cards: [],
     };
-    return AsyncStorage.mergeItem(deckStoreKey, JSON.stringify({deck: newDeck}));
+    return AsyncStorage.mergeItem(DECK_STORE_KEY, JSON.stringify({[deck]: newDeck}));
 }
 
 export function removeDeckAPI(deck) {
-    return AsyncStorage.getItem(deckStoreKey)
+    return AsyncStorage.getItem(DECK_STORE_KEY)
         .then((res) => {
             const data = JSON.parse(res) || {};
             data[deck] = undefined;
             delete data[deck];
-            return AsyncStorage.setItem(deckStoreKey, JSON.stringify(data))
+            return AsyncStorage.setItem(DECK_STORE_KEY, JSON.stringify(data))
         })
 }
