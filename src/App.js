@@ -13,6 +13,7 @@ import AddCardView from "./components/AddCardView";
 import AddDeckView from "./components/AddDeckView";
 import {FontAwesome} from '@expo/vector-icons';
 import QuizView from "./components/QuizView";
+import {setTomorrowNotification} from "./utils/native";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -46,6 +47,7 @@ const TabbedDeckList = () => {
 class App extends Component {
     componentDidMount() {
         this.props.dispatch(handleInitializeData());
+        setTomorrowNotification();
     }
 
     render() {

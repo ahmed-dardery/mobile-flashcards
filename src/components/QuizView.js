@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, ScrollView} from 'react-native';
+import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import {connect} from "react-redux";
 import BoxedButton from "./BoxedButton";
+import {clearNotification, setTomorrowNotification} from "../utils/native";
 
 class QuizView extends Component {
     state = {
@@ -16,7 +17,13 @@ class QuizView extends Component {
         const totalQuestions = this.props.deck.cards.length;
 
         if (currentQuestion + 1 === totalQuestions) {
-            this.setState({showResults: true});
+            this.setState(({correct}) =>
+                ({
+                    correct: correct + (right ? 1 : 0),
+                    showResults: true
+                })
+            );
+            clearNotification().then(setTomorrowNotification);
         } else {
             this.setState(({correct, currentQuestion}) => (
                 {
