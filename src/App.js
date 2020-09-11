@@ -12,34 +12,34 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import AddCardView from "./components/AddCardView";
 import AddDeckView from "./components/AddDeckView";
 import {FontAwesome} from '@expo/vector-icons';
+import QuizView from "./components/QuizView";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const TabbedDeckList = () => {
     return (
-            <Tab.Navigator
-                screenOptions={({ route }) => ({
-                    tabBarIcon: ({ color, size }) => {
-                        let iconName;
+        <Tab.Navigator
+            screenOptions={({route}) => ({
+                tabBarIcon: ({color, size}) => {
+                    let iconName;
 
-                        if (route.name === 'DeckList') {
-                            iconName = 'th-list'
-                        } else if (route.name === 'AddDeckView') {
-                            iconName = 'plus-square'
-                        }
+                    if (route.name === 'DeckList') {
+                        iconName = 'th-list'
+                    } else if (route.name === 'AddDeckView') {
+                        iconName = 'plus-square'
+                    }
 
-                        // You can return any component that you like here!
-                        return <FontAwesome name={iconName} size={size} color={color} />;
-                    },
-                })}
-                tabBarOptions={{
+                    return <FontAwesome name={iconName} size={size} color={color}/>;
+                },
+            })}
+            tabBarOptions={{
                 activeTintColor: appMainColor,
                 inactiveTintColor: 'gray',
             }}>
-                <Tab.Screen name="DeckList" component={DeckList}/>
-                <Tab.Screen name="AddDeckView" component={AddDeckView}/>
-            </Tab.Navigator>
+            <Tab.Screen name="DeckList" component={DeckList} options={{title: "Deck List"}}/>
+            <Tab.Screen name="AddDeckView" component={AddDeckView} options={{title: "Add New Deck"}}/>
+        </Tab.Navigator>
     );
 };
 
@@ -65,6 +65,10 @@ class App extends Component {
                         ({route}) => ({title: route.params.title})
                     }/>
                     <Stack.Screen name="AddCardView" component={AddCardView} options={{title: "Add New Card"}}/>
+                    <Stack.Screen name="QuizView" component={QuizView} options={
+                        ({route}) => ({title: route.params.title + ' Quiz'})
+                    }/>
+
                 </Stack.Navigator>
 
             </View>

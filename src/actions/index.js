@@ -1,4 +1,4 @@
-import {loadDataAPI, addCardAPI, addDeckAPI, removeDeckAPI} from '../utils/api'
+import {addCardAPI, addDeckAPI, loadDataAPI, removeDeckAPI} from '../utils/api'
 
 export const ADD_CARD = 'ADD_CARD';
 
@@ -14,7 +14,7 @@ export function handleAddCard(deck, card) {
     return (dispatch) => {
         return addCardAPI(deck, card)
             .then(dispatch(addCard(deck, card)))
-            .catch(()=>alert("an error occurred while adding the card 😕"))
+            .catch((err) => alert("an error occurred while adding the card 😕\n" + err))
     }
 }
 
@@ -31,7 +31,7 @@ export function handleAddDeck(deck) {
     return (dispatch) => {
         return addDeckAPI(deck)
             .then(dispatch(addDeck(deck)))
-            .catch(()=>alert("an error occurred while adding the deck 😕"))
+            .catch(() => alert("an error occurred while adding the deck 😕"))
     }
 }
 
@@ -48,7 +48,7 @@ export function handleRemoveDeck(deck) {
     return (dispatch) => {
         return removeDeckAPI(deck)
             .then(dispatch(removeDeck(deck)))
-            .catch(()=>alert("an error occurred while removing the deck 😕"))
+            .catch(() => alert("an error occurred while removing the deck 😕"))
     }
 }
 
@@ -64,7 +64,9 @@ function initializeData(decks) {
 export default function handleInitializeData() {
     return (dispatch) => {
         return loadDataAPI()
-            .then(decks => dispatch(initializeData(decks)))
-            .catch(()=>alert("an error occurred while loading data from database 😕"))
+            .then(decks => {
+                dispatch(initializeData(decks))
+            })
+            .catch(() => alert("an error occurred while loading data from database 😕"))
     }
 }

@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import {ScrollView, StyleSheet, Text, TextInput, View} from "react-native";
 import BoxedButton from "./BoxedButton";
+import {connect} from "react-redux";
+import {handleAddCard} from "../actions";
 
 class AddCardView extends Component {
     state = {
@@ -9,14 +11,14 @@ class AddCardView extends Component {
     };
 
     onAddCard = () => {
-        alert("assume it was added!");
-        //TODO: add card
+        const {deckId} = this.props.route.params;
+        const {dispatch} = this.props;
+        dispatch(handleAddCard(deckId, this.state));
         this.setState({question: '', answer: ''});
         this.props.navigation.goBack();
     };
 
     render() {
-        const {deckId} = this.props.route.params;
         const {question, answer} = this.state;
         return (
             <View behavior="padding" style={styles.container}>
@@ -57,4 +59,4 @@ const styles = StyleSheet.create({
         fontSize: 20,
     }
 });
-export default AddCardView;
+export default connect()(AddCardView);

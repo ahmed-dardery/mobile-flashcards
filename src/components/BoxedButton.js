@@ -2,10 +2,10 @@ import React from "react";
 import {StyleSheet, Text, TouchableOpacity} from "react-native";
 import {appMainColor, appSecondaryColor} from "../utils/colors";
 
-export default function BoxedButton({text, style, disabled, ...props}) {
+export default function BoxedButton({text, style, disabled, color, ...props}) {
     return (
         <TouchableOpacity disabled={disabled}
-                          style={[styles.mdSubmitBtn, style, disabled && {opacity: 0.4}]} {...props}>
+                          style={[styles.mdSubmitBtn, color ? {backgroundColor: color} : {}, style, disabled && {opacity: 0.4}]} {...props}>
             <Text style={styles.submitBtnText}>{text}</Text>
         </TouchableOpacity>);
 };

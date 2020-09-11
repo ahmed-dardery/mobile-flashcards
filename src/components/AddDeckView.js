@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import {KeyboardAvoidingView, StyleSheet, Text, TextInput, View} from "react-native";
 import BoxedButton from "./BoxedButton";
+import {connect} from "react-redux";
+import {handleAddDeck} from "../actions";
 
 class AddDeckView extends Component {
     state = {
@@ -8,8 +10,7 @@ class AddDeckView extends Component {
     };
 
     onAddDeck = () => {
-        alert("assume it was added!");
-        //TODO: add deck
+        this.props.dispatch(handleAddDeck(this.state.title));
         this.setState({title: ''});
         this.props.navigation.navigate("DeckList");
     };
@@ -48,4 +49,4 @@ const styles = StyleSheet.create({
         fontSize: 20,
     }
 });
-export default AddDeckView;
+export default connect()(AddDeckView);

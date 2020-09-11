@@ -29,45 +29,45 @@ const sampleData = {
         title: 'SupposedlyEmpty',
         cards: []
     },
-    Small1:{
+    Small1: {
         title: 'Small1',
-        cards:[]
+        cards: []
     },
-    Small2:{
+    Small2: {
         title: 'Small2',
-        cards:[]
+        cards: []
     },
-    Small3:{
+    Small3: {
         title: 'Small3',
-        cards:[]
+        cards: []
     },
-    Small4:{
+    Small4: {
         title: 'Small4',
-        cards:[]
+        cards: []
     },
-    Small5:{
+    Small5: {
         title: 'Small5',
-        cards:[]
+        cards: []
     }
 };
 
 export function loadDataAPI() {
-    return new Promise((ok) => ok(sampleData));
-    //return AsyncStorage.getItem(deckStoreKey).then(res => JSON.parse(res));
+    //return new Promise((ok) => ok(sampleData));
+    return AsyncStorage.getItem(deckStoreKey).then(res => JSON.parse(res) || {})
 }
 
 export function addCardAPI(deck, card) {
-    AsyncStorage.getItem(deckStoreKey)
+    return AsyncStorage.getItem(deckStoreKey)
         .then((res) => {
-            const data = JSON.parse(res);
+            const data = JSON.parse(res) || {};
             data[deck] = {...data[deck], cards: [...data[deck].cards, card]};
             return AsyncStorage.setItem(deckStoreKey, JSON.stringify(data))
-        })
+        });
 }
 
 export function addDeckAPI(deck) {
     const newDeck = {
-        deckTitle: deck,
+        title: deck,
         cards: [],
     };
     return AsyncStorage.mergeItem(deckStoreKey, JSON.stringify({deck: newDeck}));
@@ -76,7 +76,7 @@ export function addDeckAPI(deck) {
 export function removeDeckAPI(deck) {
     return AsyncStorage.getItem(deckStoreKey)
         .then((res) => {
-            const data = JSON.parse(res);
+            const data = JSON.parse(res) || {};
             data[deck] = undefined;
             delete data[deck];
             return AsyncStorage.setItem(deckStoreKey, JSON.stringify(data))

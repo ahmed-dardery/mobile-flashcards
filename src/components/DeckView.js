@@ -4,14 +4,15 @@ import {connect} from "react-redux";
 import TextButton from "./TextButton";
 import AddCardView from './AddCardView';
 import BoxedButton from "./BoxedButton";
+import {handleRemoveDeck} from "../actions";
 
 class DeckView extends Component {
     onRemoveDeck = () => {
-        const {deck} = this.props;
+        const {dispatch, navigation, deckId, deck} = this.props;
 
         const onPress = () => {
-            alert("to be implemented");
-            //TODO: erase current deck
+            dispatch(handleRemoveDeck(deckId));
+            navigation.goBack();
         };
 
         if(deck.cards.length === 0){
@@ -48,7 +49,7 @@ class DeckView extends Component {
                 <BoxedButton style={styles.deckViewChild} text="Add Card"
                               onPress={() => navigation.navigate('AddCardView', {deckId})}/>
                 <BoxedButton disabled={!deck.cards.length} style={styles.deckViewChild} text="Start Quiz!"
-                              onPress={() => alert("to be implement")/*TODO: navigation.navigate(QuizView, {deckId: deckId})*/}/>
+                              onPress={() => navigation.navigate('QuizView', {title: deck.title, deckId: deckId})}/>
                 <View style={{margin: 10}}/>
 
                 <TextButton style={styles.deckViewChild} text="Remove Deck" onPress={() => this.onRemoveDeck()}/>
